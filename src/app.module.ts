@@ -1,17 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { LibrosController } from './libros/libros.controller';
-import { LibrosService } from './libros/libros.service';
-import {MongooseModule} from '@nestjs/mongoose';
-import {LibroSchema} from './libros/schemas/libros.schemas';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from './config/typeorm.config';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-  MongooseModule.forRoot('mongodb://127.0.0.1:27017/'),
-  MongooseModule.forFeature([{name: 'libro', schema: LibroSchema}])
-],
-  controllers: [AppController, LibrosController],
-  providers: [AppService, LibrosService],
+    TypeOrmModule.forRoot(typeOrmConfig),
+    UsersModule,
+  ],
 })
 export class AppModule {}
